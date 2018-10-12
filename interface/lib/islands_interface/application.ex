@@ -6,10 +6,14 @@ defmodule IslandsInterface.Application do
   def start(_type, _args) do
     import Supervisor.Spec
 
+    # make sure that the island type atoms exisit before the application is started
+    IslandsEngine.Island.types()
+
     # Define workers and child supervisors to be supervised
     children = [
       # Start the endpoint when the application starts
       supervisor(IslandsInterfaceWeb.Endpoint, []),
+      supervisor(IslandsInterfaceWeb.Presence, []),
       # Start your own worker by calling: IslandsInterface.Worker.start_link(arg1, arg2, arg3)
       # worker(IslandsInterface.Worker, [arg1, arg2, arg3]),
     ]
